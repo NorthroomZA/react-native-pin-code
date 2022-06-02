@@ -17,7 +17,7 @@ const Screen = () => {
   return <View>
     <PinCode mode={PinCodeT.Modes.Enter} visible={true} 
       styles={{ 
-        main: { position: 'absolute', left: 0, right; 0, top: 0, bottom: 0, zIndex: 99 }
+        main: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, zIndex: 99 }
       }} 
     />
   </View>
@@ -59,7 +59,7 @@ const customTexts = {
 };
 
 const customStyles = { 
-  main: { position: 'absolute', left: 0, right; 0, top: 0, bottom: 0, zIndex: 99 },
+  main: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, zIndex: 99 },
   enter: {
     titleContainer: { borderWidth: 1 },
     title: { color: 'yellow' },

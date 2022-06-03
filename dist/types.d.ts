@@ -2,6 +2,7 @@
 import { TextStyle, ViewStyle } from "react-native";
 export declare namespace PinCodeT {
     interface PinCodeT {
+        bio?: boolean;
         visible: boolean;
         mode: Modes;
         options?: Options;
@@ -40,6 +41,7 @@ export declare namespace PinCodeT {
         onResetSuccess: () => void;
         onModeChanged?: (lastMode: Modes, newMode?: Modes) => void;
         checkPin?: (pin: string) => Promise<boolean>;
+        handleBio?: () => void;
     }
     enum Modes {
         Enter = "enter",

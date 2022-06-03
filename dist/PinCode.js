@@ -13,8 +13,8 @@ import { PinCodeT, DEFAULT, PIN_KEY } from './types';
 import PinButton from './PinButton';
 import Clock, { millisToMinutesAndSeconds } from './Clock';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const PinCode = ({ visible = false, mode = PinCodeT.Modes.Enter, options, textOptions, styles, onEnterSuccess, onSetSuccess, onSetCancel, onResetSuccess, onModeChanged, checkPin, }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29;
+const PinCode = ({ bio = false, visible = false, mode = PinCodeT.Modes.Enter, options, textOptions, styles, onEnterSuccess, onSetSuccess, onSetCancel, onResetSuccess, onModeChanged, checkPin, handleBio }) => {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31;
     const [pin, setPin] = useState('');
     const [lastPin, setLastPin] = useState('');
     const [curMode, setCurMode] = useState(mode);
@@ -196,17 +196,19 @@ const PinCode = ({ visible = false, mode = PinCodeT.Modes.Enter, options, textOp
                     <PinButton value={'9'} disabled={buttonsDisabled} style={buttonStyle} textStyle={(_1 = styles === null || styles === void 0 ? void 0 : styles.enter) === null || _1 === void 0 ? void 0 : _1.buttonText} onPress={onPinButtonPressed}/>
                 </View>
                 <View style={defaultStyles.pinNumberRow}>
-                    <View style={[defaultStyles.button, { width: 60, height: 60 }]}></View>
+                    {bio ?
+            <PinButton value={''} icon disabled={buttonsDisabled} handleBio={handleBio} backSpace={options === null || options === void 0 ? void 0 : options.backSpace} backSpaceText={(_2 = curTextOptions === null || curTextOptions === void 0 ? void 0 : curTextOptions.enter) === null || _2 === void 0 ? void 0 : _2.backSpace} style={defaultStyles.button} textStyle={(_3 = styles === null || styles === void 0 ? void 0 : styles.enter) === null || _3 === void 0 ? void 0 : _3.buttonText} onPress={onPinButtonPressed}/> :
+            <View style={[defaultStyles.button, { width: 60, height: 60 }]}></View>}
                     <PinButton value={'0'} disabled={buttonsDisabled} style={buttonStyle} onPress={onPinButtonPressed}/>
-                    <PinButton value={'delete'} disabled={buttonsDisabled} backSpace={options === null || options === void 0 ? void 0 : options.backSpace} backSpaceText={(_2 = curTextOptions === null || curTextOptions === void 0 ? void 0 : curTextOptions.enter) === null || _2 === void 0 ? void 0 : _2.backSpace} style={defaultStyles.button} textStyle={(_3 = styles === null || styles === void 0 ? void 0 : styles.enter) === null || _3 === void 0 ? void 0 : _3.buttonText} onPress={onPinButtonPressed}/>
+                    <PinButton value={'delete'} disabled={buttonsDisabled} backSpace={options === null || options === void 0 ? void 0 : options.backSpace} backSpaceText={(_4 = curTextOptions === null || curTextOptions === void 0 ? void 0 : curTextOptions.enter) === null || _4 === void 0 ? void 0 : _4.backSpace} style={defaultStyles.button} textStyle={(_5 = styles === null || styles === void 0 ? void 0 : styles.enter) === null || _5 === void 0 ? void 0 : _5.buttonText} onPress={onPinButtonPressed}/>
                 </View>
             </View>
-            <View style={[defaultStyles.footer, (_4 = styles === null || styles === void 0 ? void 0 : styles.enter) === null || _4 === void 0 ? void 0 : _4.footer]}>
+            <View style={[defaultStyles.footer, (_6 = styles === null || styles === void 0 ? void 0 : styles.enter) === null || _6 === void 0 ? void 0 : _6.footer]}>
                 {curMode == PinCodeT.Modes.Enter && curOptions.allowReset &&
             <TouchableOpacity onPress={() => {
                 switchMode(PinCodeT.Modes.Reset);
             }}>
-                        <Text style={[{ padding: 40, color: 'white' }, (_5 = styles === null || styles === void 0 ? void 0 : styles.enter) === null || _5 === void 0 ? void 0 : _5.footerText]}>{(_6 = curTextOptions.enter) === null || _6 === void 0 ? void 0 : _6.footerText}</Text>
+                        <Text style={[{ padding: 40, color: 'white' }, (_7 = styles === null || styles === void 0 ? void 0 : styles.enter) === null || _7 === void 0 ? void 0 : _7.footerText]}>{(_8 = curTextOptions.enter) === null || _8 === void 0 ? void 0 : _8.footerText}</Text>
                     </TouchableOpacity>}
                 {curMode == PinCodeT.Modes.Set &&
             <TouchableOpacity onPress={() => {
@@ -214,24 +216,24 @@ const PinCode = ({ visible = false, mode = PinCodeT.Modes.Enter, options, textOp
                 if (onSetCancel)
                     onSetCancel();
             }}>
-                        <Text style={{ color: 'white' }}>{(_7 = curTextOptions.set) === null || _7 === void 0 ? void 0 : _7.cancel}</Text>
+                        <Text style={{ color: 'white' }}>{(_9 = curTextOptions.set) === null || _9 === void 0 ? void 0 : _9.cancel}</Text>
                     </TouchableOpacity>}
             </View>
         </View>;
     }
     else if (curMode == PinCodeT.Modes.Locked) {
         return <View style={[defaultStyles.mainContainer, styles === null || styles === void 0 ? void 0 : styles.main]}>
-            <View style={[defaultStyles.titleContainer, (_8 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _8 === void 0 ? void 0 : _8.titleContainer]}>
-                <Text style={[defaultStyles.title, (_9 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _9 === void 0 ? void 0 : _9.title]}>{(_10 = curTextOptions.locked) === null || _10 === void 0 ? void 0 : _10.title}</Text>
-                <Text style={[defaultStyles.subTitle, (_11 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _11 === void 0 ? void 0 : _11.subTitle]}>
-                    {(_13 = (_12 = curTextOptions.locked) === null || _12 === void 0 ? void 0 : _12.subTitle) === null || _13 === void 0 ? void 0 : _13.replace('{{maxAttempt}}', (curOptions.maxAttempt || DEFAULT.Options.maxAttempt).toString()).replace('{{lockDuration}}', millisToMinutesAndSeconds(curOptions.lockDuration || DEFAULT.Options.lockDuration))}
+            <View style={[defaultStyles.titleContainer, (_10 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _10 === void 0 ? void 0 : _10.titleContainer]}>
+                <Text style={[defaultStyles.title, (_11 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _11 === void 0 ? void 0 : _11.title]}>{(_12 = curTextOptions.locked) === null || _12 === void 0 ? void 0 : _12.title}</Text>
+                <Text style={[defaultStyles.subTitle, (_13 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _13 === void 0 ? void 0 : _13.subTitle]}>
+                    {(_15 = (_14 = curTextOptions.locked) === null || _14 === void 0 ? void 0 : _14.subTitle) === null || _15 === void 0 ? void 0 : _15.replace('{{maxAttempt}}', (curOptions.maxAttempt || DEFAULT.Options.maxAttempt).toString()).replace('{{lockDuration}}', millisToMinutesAndSeconds(curOptions.lockDuration || DEFAULT.Options.lockDuration))}
                 </Text>
             </View>
             <View style={defaultStyles.pinContainer}>
-                {(options === null || options === void 0 ? void 0 : options.lockIcon) ? options.lockIcon : <Text style={(_14 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _14 === void 0 ? void 0 : _14.locked}>{(_15 = curTextOptions.locked) === null || _15 === void 0 ? void 0 : _15.lockedText}</Text>}
+                {(options === null || options === void 0 ? void 0 : options.lockIcon) ? options.lockIcon : <Text style={(_16 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _16 === void 0 ? void 0 : _16.locked}>{(_17 = curTextOptions.locked) === null || _17 === void 0 ? void 0 : _17.lockedText}</Text>}
             </View>
             <View style={defaultStyles.buttonContainer}>
-                <Clock style={(_16 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _16 === void 0 ? void 0 : _16.clockContainer} textStyle={(_17 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _17 === void 0 ? void 0 : _17.clockText} duration={curOptions.lockDuration} onFinish={() => {
+                <Clock style={(_18 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _18 === void 0 ? void 0 : _18.clockContainer} textStyle={(_19 = styles === null || styles === void 0 ? void 0 : styles.locked) === null || _19 === void 0 ? void 0 : _19.clockText} duration={curOptions.lockDuration} onFinish={() => {
             switchMode(PinCodeT.Modes.Enter);
             setFailureCount(0);
         }}/>
@@ -240,24 +242,24 @@ const PinCode = ({ visible = false, mode = PinCodeT.Modes.Enter, options, textOp
     }
     else if (curMode == PinCodeT.Modes.Reset) {
         return <View style={[defaultStyles.mainContainer, styles === null || styles === void 0 ? void 0 : styles.main]}>
-            <View style={[defaultStyles.titleContainer, (_18 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _18 === void 0 ? void 0 : _18.titleContainer]}>
-                <Text style={[defaultStyles.title, (_19 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _19 === void 0 ? void 0 : _19.title]}>{(_20 = curTextOptions.reset) === null || _20 === void 0 ? void 0 : _20.title}</Text>
-                <Text style={[defaultStyles.subTitle, (_21 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _21 === void 0 ? void 0 : _21.subTitle]}>{(_22 = curTextOptions.reset) === null || _22 === void 0 ? void 0 : _22.subTitle}</Text>
+            <View style={[defaultStyles.titleContainer, (_20 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _20 === void 0 ? void 0 : _20.titleContainer]}>
+                <Text style={[defaultStyles.title, (_21 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _21 === void 0 ? void 0 : _21.title]}>{(_22 = curTextOptions.reset) === null || _22 === void 0 ? void 0 : _22.title}</Text>
+                <Text style={[defaultStyles.subTitle, (_23 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _23 === void 0 ? void 0 : _23.subTitle]}>{(_24 = curTextOptions.reset) === null || _24 === void 0 ? void 0 : _24.subTitle}</Text>
             </View>
             <View style={defaultStyles.buttonContainer}>
                 {status == PinCodeT.Statuses.Initial && <>
                     <TouchableOpacity onPress={() => setStatus(PinCodeT.Statuses.ResetPrompted)}>
-                        <Text style={[defaultStyles.confirm, (_23 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _23 === void 0 ? void 0 : _23.buttons]}>{(_24 = curTextOptions.reset) === null || _24 === void 0 ? void 0 : _24.resetButton}</Text>
+                        <Text style={[defaultStyles.confirm, (_25 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _25 === void 0 ? void 0 : _25.buttons]}>{(_26 = curTextOptions.reset) === null || _26 === void 0 ? void 0 : _26.resetButton}</Text>
                     </TouchableOpacity>
                 </>}
                 {status == PinCodeT.Statuses.ResetPrompted && <>
-                    <Text style={{ color: 'white', marginBottom: 20 }}>{(_25 = curTextOptions.reset) === null || _25 === void 0 ? void 0 : _25.confirm}</Text>
+                    <Text style={{ color: 'white', marginBottom: 20 }}>{(_27 = curTextOptions.reset) === null || _27 === void 0 ? void 0 : _27.confirm}</Text>
                     <TouchableOpacity onPress={onDeletePIN}>
-                        <Text style={[defaultStyles.confirm, (_26 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _26 === void 0 ? void 0 : _26.buttons]}>{(_27 = curTextOptions.reset) === null || _27 === void 0 ? void 0 : _27.confirmButton}</Text>
+                        <Text style={[defaultStyles.confirm, (_28 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _28 === void 0 ? void 0 : _28.buttons]}>{(_29 = curTextOptions.reset) === null || _29 === void 0 ? void 0 : _29.confirmButton}</Text>
                     </TouchableOpacity>
                 </>}
                 <TouchableOpacity onPress={() => switchMode(PinCodeT.Modes.Enter)}>
-                    <Text style={[{ fontSize: 14, paddingHorizontal: 40, paddingVertical: 20, color: 'white' }, (_28 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _28 === void 0 ? void 0 : _28.buttons]}>{(_29 = curTextOptions.reset) === null || _29 === void 0 ? void 0 : _29.backButton}</Text>
+                    <Text style={[{ fontSize: 14, paddingHorizontal: 40, paddingVertical: 20, color: 'white' }, (_30 = styles === null || styles === void 0 ? void 0 : styles.reset) === null || _30 === void 0 ? void 0 : _30.buttons]}>{(_31 = curTextOptions.reset) === null || _31 === void 0 ? void 0 : _31.backButton}</Text>
                 </TouchableOpacity>
             </View>
         </View>;

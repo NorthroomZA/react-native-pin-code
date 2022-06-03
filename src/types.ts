@@ -2,6 +2,7 @@ import { TextStyle, ViewStyle } from "react-native";
 
 export namespace PinCodeT {
     export interface PinCodeT {
+        bio?: boolean;
         visible: boolean;
         mode: Modes;
         options?: Options;

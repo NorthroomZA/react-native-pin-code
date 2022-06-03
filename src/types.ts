@@ -40,6 +40,7 @@ export namespace PinCodeT {
         onResetSuccess: () => void;
         onModeChanged?: (lastMode: Modes, newMode?: Modes) => void;
         checkPin?: (pin: string) => Promise<boolean>;
+        handleBio?:  () => void;
     }
 
     export enum Modes {

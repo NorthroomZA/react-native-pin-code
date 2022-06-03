@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const PinCode = ({
+    bio=false,
     visible = false,
     mode = PinCodeT.Modes.Enter,
     options,
@@ -20,6 +21,7 @@ const PinCode = ({
     onResetSuccess,
     onModeChanged,
     checkPin,
+    handleBio
 }: PinCodeT.PinCodeT) => {
     const [pin, setPin] = useState('');
     const [lastPin, setLastPin] = useState('');
@@ -213,7 +215,11 @@ const PinCode = ({
                     <PinButton value={'9'} disabled={buttonsDisabled} style={buttonStyle} textStyle={styles?.enter?.buttonText} onPress={onPinButtonPressed} />
                 </View>
                 <View style={defaultStyles.pinNumberRow}>
-                    <View style={[defaultStyles.button, { width: 60, height: 60 }]}></View>
+                    {bio ?
+                        <PinButton value={''} icon disabled={buttonsDisabled} handleBio={handleBio}
+                            backSpace={options?.backSpace} backSpaceText={curTextOptions?.enter?.backSpace}
+                            style={defaultStyles.button} textStyle={styles?.enter?.buttonText} onPress={onPinButtonPressed} /> :
+                        <View style={[defaultStyles.button, { width: 60, height: 60 }]}></View>}
                     <PinButton value={'0'} disabled={buttonsDisabled} style={buttonStyle} onPress={onPinButtonPressed} />
                     <PinButton value={'delete'} disabled={buttonsDisabled}
                         backSpace={options?.backSpace} backSpaceText={curTextOptions?.enter?.backSpace}

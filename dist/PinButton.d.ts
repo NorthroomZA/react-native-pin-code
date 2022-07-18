@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { TextStyle, ViewStyle } from 'react-native';
-declare const PinButton: ({ value, style, textStyle, disabled, backSpace, backSpaceText, onPress, icon, handleBio }: {
+import { TextStyle, ViewStyle } from "react-native";
+declare const PinButton: ({ value, style, textStyle, disabled, backSpace, backSpaceText, onPress, icon, handleBio, }: {
     value: string;
     disabled?: boolean | undefined;
     backSpace?: JSX.Element | undefined;
